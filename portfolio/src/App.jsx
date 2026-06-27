@@ -15,6 +15,13 @@ import EvaluationMetricsSlide from './slides/EvaluationMetricsSlide.jsx'
 import EvaluationMetricsIISlide from './slides/EvaluationMetricsIISlide.jsx'
 import OnDeviceAISlide from './slides/OnDeviceAISlide.jsx'
 import LightweightTechniquesSlide from './slides/LightweightTechniquesSlide.jsx'
+import OCTSegmentationProjectSlide from './slides/OCTSegmentationProjectSlide.jsx'
+import DatasetDiseaseIntroSlide from './slides/DatasetDiseaseIntroSlide.jsx'
+import RetinalLayersSlide from './slides/RetinalLayersSlide.jsx'
+import EDAAnalysisISlide from './slides/EDAAnalysisISlide.jsx'
+import EDAAnalysisIISlide from './slides/EDAAnalysisIISlide.jsx'
+import ModelArchitectureSlide from './slides/ModelArchitectureSlide.jsx'
+import TrainingStrategySlide from './slides/TrainingStrategySlide.jsx'
 
 const SLIDES = [
   { Component: TitleSlide, label: '표지' },
@@ -33,6 +40,13 @@ const SLIDES = [
   { Component: EvaluationMetricsIISlide, label: '평가지표 II' },
   { Component: OnDeviceAISlide, label: '온디바이스 AI' },
   { Component: LightweightTechniquesSlide, label: '모델 경량화 기법' },
+  { Component: OCTSegmentationProjectSlide, label: 'OCT 망막 층 Segmentation' },
+  { Component: DatasetDiseaseIntroSlide, label: '데이터셋 및 질환 소개' },
+  { Component: EDAAnalysisISlide, label: '데이터셋 분석 I' },
+  { Component: RetinalLayersSlide, label: '분류 대상 망막 5개 층' },
+  { Component: EDAAnalysisIISlide, label: '데이터셋 분석 II' },
+  { Component: ModelArchitectureSlide, label: '모델 아키텍처' },
+  { Component: TrainingStrategySlide, label: '학습 전략' },
 ]
 
 export default function App() {
