@@ -27,6 +27,7 @@ def build_objective(args):
             lr=lr,
             weight_decay=weight_decay,
             seed=args.seed,
+            data_root=args.data_root,
             epoch_callback=epoch_callback,
         )
 
@@ -49,6 +50,7 @@ def parse_args():
     parser.add_argument("--final-checkpoint-dir", default="checkpoints")
     parser.add_argument("--run-name", default="best", help="최종 재학습 결과에 붙는 이름")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--data-root", default=None, help="OCT5k 루트 경로 (csv 절대경로를 현재 환경에 맞게 재구성)")
     return parser.parse_args()
 
 
@@ -80,6 +82,7 @@ def main():
         lr=study.best_params["lr"],
         weight_decay=study.best_params["weight_decay"],
         seed=args.seed,
+        data_root=args.data_root,
     )
 
 

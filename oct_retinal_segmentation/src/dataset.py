@@ -40,11 +40,32 @@ class OCTRetinalDataset(Dataset):
                 if os.path.exists(mask_path):
                     self.samples.append((image_path, mask_path))
 
+    @staticmethod
+    def _remap_path(path, root_dir):
+        """csv에 저장된 절대경로가 다른 환경(Colab/Kaggle/로컬)에서 만들어진 경우,
+        Images/Images_Manual 또는 Masks/Masks_Manual 이후 상대경로만 추출해
+        현재 환경의 root_dir 기준으로 다시 붙인다."""
+        normalized = path.replace("\\", "/")
+        for marker in ("/Images/Images_Manual/", "/Masks/Masks_Manual/"):
+            idx = normalized.find(marker)
+            if idx != -1:
+                return os.path.join(root_dir, *normalized[idx + 1:].split("/"))
+        return path
+
     @classmethod
-    def from_csv(cls, csv_path, transform=None):
-        """02_preprocessing에서 저장한 split csv(image_path, mask_path)로부터 생성."""
+    def from_csv(cls, csv_path, transform=None, root_dir=None):
+        """02_preprocessing에서 저장한 split csv(image_path, mask_path)로부터 생성.
+
+        root_dir를 넘기면 csv의 절대경로를 현재 환경(OCT5k 루트)에 맞게 재구성한다.
+        """
         df = pd.read_csv(csv_path)
-        samples = list(zip(df["image_path"], df["mask_path"]))
+        if root_dir is not None:
+            image_paths = [cls._remap_path(p, root_dir) for p in df["image_path"]]
+            mask_paths = [cls._remap_path(p, root_dir) for p in df["mask_path"]]
+        else:
+            image_paths = list(df["image_path"])
+            mask_paths = list(df["mask_path"])
+        samples = list(zip(image_paths, mask_paths))
         return cls(transform=transform, samples=samples)
 
     def __len__(self):

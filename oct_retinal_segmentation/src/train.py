@@ -73,19 +73,23 @@ def run_training(
     weight_decay=0.0,
     seed=42,
     device=None,
+    data_root=None,
     epoch_callback=None,
 ):
     """학습 1회 실행. train.py CLI와 tune.py(Optuna) 양쪽에서 공유하는 핵심 로직.
 
     epoch_callback(epoch, val_dice) -> bool 을 넘기면 매 epoch 끝에 호출되고,
     True를 반환하면 학습을 조기 종료한다 (Optuna pruning 등에 사용).
+
+    data_root를 넘기면 csv에 저장된 절대경로(다른 환경에서 만들어졌을 수 있음)를
+    현재 환경의 OCT5k 루트 기준으로 재구성한다.
     """
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(seed)
     os.makedirs(checkpoint_dir, exist_ok=True)
 
-    train_dataset = OCTRetinalDataset.from_csv(train_csv, transform=get_train_transform())
-    val_dataset = OCTRetinalDataset.from_csv(val_csv)
+    train_dataset = OCTRetinalDataset.from_csv(train_csv, transform=get_train_transform(), root_dir=data_root)
+    val_dataset = OCTRetinalDataset.from_csv(val_csv, root_dir=data_root)
 
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
@@ -145,6 +149,7 @@ def parse_args():
     parser.add_argument("--weight-decay", type=float, default=0.0)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument("--data-root", default=None, help="OCT5k 루트 경로 (csv 절대경로를 현재 환경에 맞게 재구성)")
     return parser.parse_args()
 
 
@@ -161,6 +166,7 @@ def main():
         weight_decay=args.weight_decay,
         seed=args.seed,
         device=args.device,
+        data_root=args.data_root,
     )
 
 
