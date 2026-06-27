@@ -2,6 +2,7 @@ import glob
 import os
 
 import cv2
+import pandas as pd
 import torch
 from torch.utils.data import Dataset
 
@@ -18,10 +19,14 @@ class OCTRetinalDataset(Dataset):
     <질환> 이하 상대경로가 동일하므로 그 경로로 매칭한다.
     """
 
-    def __init__(self, root_dir, grading=1, diseases=DEFAULT_DISEASES, transform=None):
+    def __init__(self, root_dir=None, grading=1, diseases=DEFAULT_DISEASES, transform=None, samples=None):
         self.transform = transform
-        self.samples = []
 
+        if samples is not None:
+            self.samples = list(samples)
+            return
+
+        self.samples = []
         images_root = os.path.join(root_dir, "Images", "Images_Manual")
         masks_root = os.path.join(root_dir, "Masks", "Masks_Manual", f"Grading_{grading}")
 
@@ -34,6 +39,13 @@ class OCTRetinalDataset(Dataset):
                 mask_path = os.path.join(masks_root, rel_path)
                 if os.path.exists(mask_path):
                     self.samples.append((image_path, mask_path))
+
+    @classmethod
+    def from_csv(cls, csv_path, transform=None):
+        """02_preprocessing에서 저장한 split csv(image_path, mask_path)로부터 생성."""
+        df = pd.read_csv(csv_path)
+        samples = list(zip(df["image_path"], df["mask_path"]))
+        return cls(transform=transform, samples=samples)
 
     def __len__(self):
         return len(self.samples)
