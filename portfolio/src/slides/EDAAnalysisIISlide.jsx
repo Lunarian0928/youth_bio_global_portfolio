@@ -52,8 +52,8 @@ export default function EDAAnalysisIISlide() {
           <p>
             전체 픽셀 분포를 분석한 결과 OBRPE(5) 아래 영역이 52.7%로 가장 넓은 면적을 차지하고{' '}
             <span className="hl">IS/OS(3)와 IBRPE(4)는 각각 1.7%, 1.6%로 매우 얇은 층</span>입니다.
-            얇은 층일수록 픽셀 수가 적어 학습이 어렵기 때문에 <span className="hl">Class Weight를
-            적용</span>해 소수 클래스에 더 높은 가중치를 부여했습니다.
+            얇은 층일수록 픽셀 수가 적어 <span className="hl">모델이 학습하기 어려운 소수
+            클래스</span>가 됩니다.
           </p>
         </div>
       </div>

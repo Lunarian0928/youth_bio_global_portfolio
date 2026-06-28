@@ -6,6 +6,10 @@ export default function OCTSegmentationProjectSlide() {
         <h2 className="slide-title">OCT 망막 층 Segmentation</h2>
         <div className="slide-body">
           <p>
+            <span className="hl">이 프로젝트의 목표는 Segmentation입니다.</span> Detection·Classification은
+            앞서 개념 설명에서 다룬 별도 주제이며, 이 프로젝트에서 직접 구현하지는 않았습니다.
+          </p>
+          <p>
             OCT5k 공개 데이터셋을 활용해 망막 OCT 영상에서 <span className="hl">5개 층을 픽셀 단위로
             분류</span>하는 Segmentation 모델을 직접 설계하고 학습시켰습니다. 데이터 전처리, 모델 학습,
             성능 평가까지 <span className="hl">의료영상 AI 파이프라인 전 과정을 직접 구현</span>했습니다.
