@@ -26,34 +26,69 @@ import ResultsSlide from './slides/ResultsSlide.jsx'
 import PredictionVisualizationSlide from './slides/PredictionVisualizationSlide.jsx'
 import LimitationsSlide from './slides/LimitationsSlide.jsx'
 
-const SLIDES = [
-  { Component: TitleSlide, label: '표지' },
-  { Component: WhyMedicalImagingSlide, label: '왜 의료영상 AI인가' },
-  { Component: ThreeDImagingSlide, label: '3D 의료영상이란' },
-  { Component: OCTSlide, label: 'OCT란 무엇인가' },
-  { Component: DicomSlide, label: 'DICOM' },
-  { Component: DetectionSegmentationSlide, label: 'Detection과 Segmentation' },
-  { Component: YOLOSlide, label: 'YOLO' },
-  { Component: UNetSlide, label: 'U-Net' },
-  { Component: TransferLearningSlide, label: 'Transfer Learning' },
-  { Component: ImageNetSlide, label: 'ImageNet' },
-  { Component: ResNetSlide, label: 'ResNet' },
-  { Component: ClassImbalanceSlide, label: '클래스 불균형' },
-  { Component: EvaluationMetricsSlide, label: '평가지표 I' },
-  { Component: EvaluationMetricsIISlide, label: '평가지표 II' },
-  { Component: OnDeviceAISlide, label: '온디바이스 AI' },
-  { Component: LightweightTechniquesSlide, label: '모델 경량화 기법' },
-  { Component: OCTSegmentationProjectSlide, label: 'OCT 망막 층 Segmentation' },
-  { Component: DatasetDiseaseIntroSlide, label: '데이터셋 및 질환 소개' },
-  { Component: EDAAnalysisISlide, label: '데이터셋 분석 I' },
-  { Component: RetinalLayersSlide, label: '분류 대상 망막 5개 층' },
-  { Component: EDAAnalysisIISlide, label: '데이터셋 분석 II' },
-  { Component: ModelArchitectureSlide, label: '모델 아키텍처' },
-  { Component: TrainingStrategySlide, label: '학습 전략' },
-  { Component: ResultsSlide, label: '실험 결과' },
-  { Component: PredictionVisualizationSlide, label: '예측 결과 시각화' },
-  { Component: LimitationsSlide, label: '한계점' },
+const SLIDE_GROUPS = [
+  {
+    title: '표지',
+    items: [{ Component: TitleSlide, label: '표지' }],
+  },
+  {
+    title: '의료영상 AI 개념',
+    items: [
+      { Component: WhyMedicalImagingSlide, label: '왜 의료영상 AI인가' },
+      { Component: ThreeDImagingSlide, label: '3D 의료영상이란' },
+      { Component: OCTSlide, label: 'OCT란 무엇인가' },
+      { Component: DicomSlide, label: 'DICOM' },
+    ],
+  },
+  {
+    title: '분석 방법론',
+    items: [
+      { Component: DetectionSegmentationSlide, label: 'Detection과 Segmentation' },
+      { Component: YOLOSlide, label: 'YOLO' },
+      { Component: UNetSlide, label: 'U-Net' },
+    ],
+  },
+  {
+    title: '학습 전략',
+    items: [
+      { Component: TransferLearningSlide, label: 'Transfer Learning' },
+      { Component: ImageNetSlide, label: 'ImageNet' },
+      { Component: ResNetSlide, label: 'ResNet' },
+      { Component: ClassImbalanceSlide, label: '클래스 불균형' },
+    ],
+  },
+  {
+    title: '성능 평가',
+    items: [
+      { Component: EvaluationMetricsSlide, label: '평가지표 I' },
+      { Component: EvaluationMetricsIISlide, label: '평가지표 II' },
+    ],
+  },
+  {
+    title: '온디바이스 AI',
+    items: [
+      { Component: OnDeviceAISlide, label: '온디바이스 AI' },
+      { Component: LightweightTechniquesSlide, label: '모델 경량화 기법' },
+    ],
+  },
+  {
+    title: 'OCT5k Segmentation 프로젝트',
+    items: [
+      { Component: OCTSegmentationProjectSlide, label: 'OCT 망막 층 Segmentation' },
+      { Component: DatasetDiseaseIntroSlide, label: '데이터셋 및 질환 소개' },
+      { Component: EDAAnalysisISlide, label: '데이터셋 분석 I' },
+      { Component: RetinalLayersSlide, label: '분류 대상 망막 5개 층' },
+      { Component: EDAAnalysisIISlide, label: '데이터셋 분석 II' },
+      { Component: ModelArchitectureSlide, label: '모델 아키텍처' },
+      { Component: TrainingStrategySlide, label: '학습 전략' },
+      { Component: ResultsSlide, label: '실험 결과' },
+      { Component: PredictionVisualizationSlide, label: '예측 결과 시각화' },
+      { Component: LimitationsSlide, label: '한계점' },
+    ],
+  },
 ]
+
+const SLIDES = SLIDE_GROUPS.flatMap((group) => group.items)
 
 export default function App() {
   const [index, setIndex] = useState(0)
@@ -83,6 +118,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [next, prev])
 
+  let runningIndex = 0
+
   return (
     <div className="app">
       <div className="slide-viewport">
@@ -101,15 +138,27 @@ export default function App() {
       <div className="side-nav-zone">
         <div className="side-nav-indicator" />
         <div className="side-nav-panel">
-          {SLIDES.map(({ label }, i) => (
-            <button
-              key={i}
-              className={`side-nav-item${i === index ? ' active' : ''}`}
-              onClick={() => goTo(i)}
-            >
-              {label}
-            </button>
-          ))}
+          {SLIDE_GROUPS.map((group) => {
+            const groupStart = runningIndex
+            runningIndex += group.items.length
+            return (
+              <div className="side-nav-group" key={group.title}>
+                <div className="side-nav-group-title">{group.title}</div>
+                {group.items.map((item, i) => {
+                  const slideIndex = groupStart + i
+                  return (
+                    <button
+                      key={slideIndex}
+                      className={`side-nav-item${slideIndex === index ? ' active' : ''}`}
+                      onClick={() => goTo(slideIndex)}
+                    >
+                      {item.label}
+                    </button>
+                  )
+                })}
+              </div>
+            )
+          })}
         </div>
       </div>
 
