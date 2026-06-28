@@ -25,6 +25,7 @@ import TrainingStrategySlide from './slides/TrainingStrategySlide.jsx'
 import ResultsSlide from './slides/ResultsSlide.jsx'
 import PredictionVisualizationSlide from './slides/PredictionVisualizationSlide.jsx'
 import LimitationsSlide from './slides/LimitationsSlide.jsx'
+import RetrospectiveSlide from './slides/RetrospectiveSlide.jsx'
 
 const SLIDE_GROUPS = [
   {
@@ -84,6 +85,7 @@ const SLIDE_GROUPS = [
       { Component: ResultsSlide, label: '실험 결과' },
       { Component: PredictionVisualizationSlide, label: '예측 결과 시각화' },
       { Component: LimitationsSlide, label: '한계점' },
+      { Component: RetrospectiveSlide, label: '시행착오와 소감' },
     ],
   },
 ]
