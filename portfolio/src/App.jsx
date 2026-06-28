@@ -22,6 +22,7 @@ import EDAAnalysisISlide from './slides/EDAAnalysisISlide.jsx'
 import EDAAnalysisIISlide from './slides/EDAAnalysisIISlide.jsx'
 import ModelArchitectureSlide from './slides/ModelArchitectureSlide.jsx'
 import TrainingStrategySlide from './slides/TrainingStrategySlide.jsx'
+import TrainingStrategyIISlide from './slides/TrainingStrategyIISlide.jsx'
 import ResultsSlide from './slides/ResultsSlide.jsx'
 import PredictionVisualizationSlide from './slides/PredictionVisualizationSlide.jsx'
 import LimitationsSlide from './slides/LimitationsSlide.jsx'
@@ -81,7 +82,8 @@ const SLIDE_GROUPS = [
       { Component: RetinalLayersSlide, label: '분류 대상 망막 5개 층' },
       { Component: EDAAnalysisIISlide, label: '데이터셋 분석 II' },
       { Component: ModelArchitectureSlide, label: '모델 아키텍처' },
-      { Component: TrainingStrategySlide, label: '학습 전략' },
+      { Component: TrainingStrategySlide, label: '학습 전략 I' },
+      { Component: TrainingStrategyIISlide, label: '학습 전략 II' },
       { Component: ResultsSlide, label: '실험 결과' },
       { Component: PredictionVisualizationSlide, label: '예측 결과 시각화' },
       { Component: LimitationsSlide, label: '한계점' },

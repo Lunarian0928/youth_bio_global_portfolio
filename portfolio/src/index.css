@@ -305,6 +305,31 @@ body {
   line-height: 1.65;
 }
 
+.ddi-device-card {
+  margin-top: 10px;
+  padding: 12px 18px;
+}
+
+.ddi-device-card .card-title {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.ddi-device-card .card-desc {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ddi-body {
+  margin-top: 14px;
+}
+
+.ddi-body p {
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
 .pv-slide {
   align-items: stretch;
   height: 100%;

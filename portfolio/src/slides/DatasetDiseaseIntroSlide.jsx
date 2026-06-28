@@ -3,7 +3,20 @@ export default function DatasetDiseaseIntroSlide() {
     <div>
       <div className="slide-eyebrow">Dataset</div>
       <h2 className="slide-title">데이터셋 및 질환 소개</h2>
-      <div className="slide-body" style={{ maxWidth: 780 }}>
+
+      <div className="info-card ddi-device-card">
+        <div className="card-title">Heidelberg SPECTRALIS HRA+OCT</div>
+        <div className="card-desc">
+          OCT5k 데이터셋은 Heidelberg SPECTRALIS HRA+OCT 장비로 촬영됐습니다. Spectral-Domain
+          OCT(SD-OCT) 방식으로 <span className="hl">축 방향 해상도 3.9μm, 횡 방향 해상도
+          14μm</span>의 고해상도 망막 단면 이미지를 촬영합니다. TruTrack 실시간 안구 추적 기술로
+          눈 움직임을 보정해 정밀한 영상을 확보합니다. <span className="hl">단일 제조사·단일 장비
+          데이터</span>로 구성되어 있어 <span className="hl">다른 제조사 장비에 대한 일반화 성능은
+          별도 검증이 필요합니다</span>.
+        </div>
+      </div>
+
+      <div className="slide-body ddi-body" style={{ maxWidth: 780 }}>
         <p>
           OCT5k는 UCL에서 공개한 망막 OCT 데이터셋입니다. AMD, DME, Normal 세 가지 질환 그룹에서
           수집된 1,672장의 OCT B-scan 이미지와 <span className="hl">전문가 3인이 직접 레이블링한

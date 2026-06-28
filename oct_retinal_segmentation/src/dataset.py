@@ -22,22 +22,37 @@ class OCTRetinalDataset(Dataset):
     def __init__(self, root_dir=None, grading=1, diseases=DEFAULT_DISEASES, transform=None, samples=None):
         self.transform = transform
 
+        # from_csv()를 통해 호출된 경우: 이미 (이미지경로, 마스크경로) 쌍 목록이 있으니
+        # 폴더를 다시 스캔할 필요 없이 그대로 받아서 끝낸다.
         if samples is not None:
             self.samples = list(samples)
             return
 
+        # 여기부터는 폴더를 직접 뒤져서 (이미지, 마스크) 쌍을 처음부터 찾는 경로.
         self.samples = []
         images_root = os.path.join(root_dir, "Images", "Images_Manual")
         masks_root = os.path.join(root_dir, "Masks", "Masks_Manual", f"Grading_{grading}")
 
-        for disease in diseases:
+        for disease in diseases:  # AMD Part1, AMD Part2, DME, Normal Part1, Normal Part2 순회
             disease_image_dir = os.path.join(images_root, disease)
             if not os.path.isdir(disease_image_dir):
-                continue
+                continue  # 그 질환 폴더가 없으면 건너뜀
+
+            # 이 질환 폴더 안(하위 폴더 전부 포함)에 있는 모든 .png 파일의 "경로 문자열"을 찾아옴
+            # → 디스크에 이미 존재하는 파일을 검색하는 것일 뿐, 새 파일을 만들지 않음
             for image_path in glob.glob(os.path.join(disease_image_dir, "**", "*.png"), recursive=True):
+                # images_root를 기준으로 한 상대경로만 추출
+                # 예: ".../Images_Manual/DME/DME (11).E2E/.../Image 1.png" → "DME/DME (11).E2E/.../Image 1.png"
                 rel_path = os.path.relpath(image_path, images_root)
+
+                # 마스크 쪽도 같은 상대경로 구조이므로, masks_root에 그대로 이어붙이면
+                # 이 이미지와 짝이 되는 마스크의 "예상 경로"가 만들어짐
                 mask_path = os.path.join(masks_root, rel_path)
+
+                # 그 마스크 파일이 실제로 존재하는 경우에만 정상적인 짝으로 인정
                 if os.path.exists(mask_path):
+                    # self.samples 리스트(메모리)에 (이미지경로, 마스크경로) 쌍을 하나 추가
+                    # → 디스크에는 아무 변화 없음, 그냥 "어떤 이미지와 어떤 마스크가 짝인지" 메모리에 기록
                     self.samples.append((image_path, mask_path))
 
     @staticmethod

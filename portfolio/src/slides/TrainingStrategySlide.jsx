@@ -83,8 +83,8 @@ export default function TrainingStrategySlide() {
   return (
     <div className="two-col">
       <div>
-        <div className="slide-eyebrow">Training Strategy</div>
-        <h2 className="slide-title">학습 전략</h2>
+        <div className="slide-eyebrow">Training Strategy I</div>
+        <h2 className="slide-title">학습 전략 I</h2>
         <div className="slide-body">
           <p>
             데이터가 적은 의료영상 환경에서 신뢰할 수 있는 모델을 만들기 위해 <span className="hl">환자
