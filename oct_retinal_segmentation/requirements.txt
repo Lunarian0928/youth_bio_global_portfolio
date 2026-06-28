@@ -12,3 +12,4 @@ jupyter
 tqdm
 albumentations
 optuna
+koreanize-matplotlib
