@@ -46,10 +46,11 @@ export default function RetrospectiveSlide() {
         <div className="info-card">
           <div className="card-title">앞으로의 다짐</div>
           <div className="card-desc">
-            입사 후 실무에서는 <span className="hl">제대로 된 기획 없이 작업을 시작하면 시간 낭비로
-            이어진다</span>는 것을 이번 프로젝트에서 실감했습니다. 환경 설정, 데이터 준비, 실험
-            설계 모두 사전에 충분히 검토하고 <span className="hl">신중하게 접근해야 한다</span>는
-            것을 이번 경험을 통해 배웠습니다.
+            모델 학습에 상당한 시간이 소요되는 환경에서는 <span className="hl">사전 기획이
+            더욱 중요하다는 것을 실감했습니다</span>. 실험 설계나 코드 구조를 충분히 검토하지
+            않은 채 학습을 시작하면 <span className="hl">수 시간의 GPU 자원이 낭비됩니다</span>.
+            실무에서는 한 번의 실험이 더 큰 비용으로 이어지는 만큼 <span className="hl">사전에
+            충분히 검토하고 신중하게 접근해야겠다는 다짐</span>을 하게 됐습니다.
           </div>
         </div>
       </div>
